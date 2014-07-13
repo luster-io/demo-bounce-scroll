@@ -113,15 +113,13 @@ gulp.task('watch', ['html', 'bundle', 'connect'], function () {
     // Watch .html files
     gulp.watch('app/*.html', ['html']);
 
-    
-
-
 
 
 
     // Watch .jsx files
     // gulp.watch('app/scripts/**/*.jsx', ['jsx', 'scripts']);
 
+    gulp.watch('node_modules/rk4/lib/*.js', ['scripts']);
     // Watch .js files
     gulp.watch('app/scripts/**/*.js', ['scripts']);
 

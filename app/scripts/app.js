@@ -6,44 +6,104 @@ var Physics = require('rk4')
   , Vector = window.Vector = require('rk4/lib/vector')
   , Promise = Promise || require('promise')
   , EventEmitter = require('events')
+  , height = $(window).height()
 
+var opts = { b: 10, k: 100 }
 function List(els) {
-  var listItems = []
+  var listItems = this.listItems = []
     , listItem
+
   for(var i = 0 ; i < els.length ; i++) {
-    listItem = new ListItem(els[i])
-    if(listItems[i - 1]) {
-      listItem.setPrev(listItems[i - 1])
-      listItems[i - 1].setNext(listItem)
-    }
-    listItems.push(listItem)
+    listItems.push(new ListItem(els[i], i))
   }
+
+  var startY
+    , currentPosition = 0
+    , lastPosition = 0
+    , velo
+    , dist
+
+  var that = this
+  this.phys = new Physics(function(pos) {
+    currentPosition = pos.y
+    var delta = currentPosition - lastPosition
+    that.spring.setPosition({ x: 0, y: that.itemPhys.position.y + delta })
+    lastPosition = currentPosition
+  })
+
+  this.itemPhys = new Physics(function(pos) {
+    if(typeof startY === 'undefined') return
+    listItems.forEach(function(listItem) {
+      var dist = startY - listItem.topOffset
+        , scrollHardness = -Math.max(Math.abs(dist / 800), 0)
+        , springPosition = scrollHardness * pos.y
+
+      listItem.scroll(currentPosition, springPosition)
+    })
+  })
+  this.spring = this.itemPhys.infiniSpring(0, { x: 0, y: 0 }, opts)
+
+  window.addEventListener('touchstart', function(evt) {
+    that.phys.cancel()
+    startY = evt.touches[0].pageY - currentPosition
+    velo = new Velocity
+  })
+
+  window.addEventListener('touchmove', function(evt) {
+    evt.preventDefault()
+    currentPosition = evt.touches[0].pageY - startY
+    var delta = currentPosition - lastPosition
+
+    that.spring.setPosition({ x: 0, y: that.itemPhys.position.y + delta })
+
+    velo.updatePosition(currentPosition)
+    lastPosition = currentPosition
+  })
+
+  window.addEventListener('touchend', function(evt) {
+    var velocity = velo.getVelocity()
+    if(velocity <= 0) {
+      var top = height - (listItems[listItems.length - 1].topOffset + 20)
+      that.phys.decelerate(velocity, { x: 0, y: currentPosition }, { x: 0, y: top }, { acceleration: 1000 })
+    } else {
+      that.phys.decelerate(velocity, { x: 0, y: currentPosition }, { x: 0, y: 0 }, { acceleration: 1000 })
+    }
+  })
 }
 
-function ListItem(el) {
-  this.next = null
-  this.prev = null
+var list = new List(document.querySelectorAll('.messages > div'))
+
+var springs = 0
+
+function ListItem(el, i) {
   this.el = el
-  this.currentPosition = Vector(0, 0)
+  this.topOffset = $(el).offset().top
+  this.lastPosition = this.topOffset
+
+  var that = this
+
+  setTimeout(function() {
+    $(el).css({
+      top: '0px',
+      left: '0px',
+      position: 'absolute'
+    })
+    that.renderer.update({ y: that.lastPosition })
+  }, 20)
+
 
   this.renderer = new Renderer([el])
-    .style('translateY', function(pos) { console.log(pos.y); return pos.y + 'px' })
+    .style('translateY', function(pos) { return pos.y + 'px' })
+    .visible(function(pos) { return pos.y > height + 5 || pos.y + 50 < 0 })
 
-  this.phys = new Physics(this.renderer.update.bind(this.renderer))
+  var that = this
+}
+
+ListItem.prototype.scroll = function(currentPosition, springPosition) {
+  currentPosition = currentPosition + this.topOffset
+  this.renderer.update({ y: currentPosition + springPosition })
+  this.lastPosition = currentPosition
 }
 
 ListItem.prototype = new EventEmitter()
-
-var opts = { b: 10, k: 100, seperation: 50 }
-
-ListItem.prototype.setPrev = function(prev) {
-  this.prev = prev
-  this.phys.attachSpring(0, { x: 0, y: 0 }, this.prev.phys, opts)
-}
-
-ListItem.prototype.setNext = function(next) {
-  this.next = next
-  this.phys.attachSpring(0, { x: 0, y: 0 }, this.next.phys, opts)
-}
-
-var list = new List([].slice.call(document.querySelectorAll('.message')))
+var logged = false
