@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title>chat heads</title>
+        <title>bounce scroll</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -14,8 +14,186 @@
         <style>
 
 body {
-  font-family: 'Helvetica Neue';
+  font-family: "Helvetica Neue", "Arial";
 }
+
+/* === Navbar === */
+.navbar {
+  height: 44px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 17px;
+  position: relative;
+  margin: 0;
+  z-index: 500;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.navbar-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 8px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.navbar b,
+.toolbar b {
+  font-weight: 500;
+}
+.navbar a.link,
+.toolbar a.link {
+  line-height: 44px;
+  height: 44px;
+  color: #007aff;
+  text-decoration: none;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.navbar a.link:active,
+.toolbar a.link:active {
+  opacity: 0.3;
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
+.navbar a.link i + span,
+.toolbar a.link i + span,
+.navbar a.link i + i,
+.toolbar a.link i + i,
+.navbar a.link span + i,
+.toolbar a.link span + i,
+.navbar a.link span + span,
+.toolbar a.link span + span {
+  margin-left: 7px;
+}
+.navbar a.icon-only,
+.toolbar a.icon-only {
+  min-width: 44px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  margin: 0;
+}
+.navbar i.icon,
+.toolbar i.icon {
+  display: block;
+}
+.navbar {
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid #c4c4c4;
+}
+html.ios-gt-7 .navbar {
+  border-bottom-width: 0.5px;
+}
+.navbar .center {
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 44px;
+  -webkit-flex-shrink: 10;
+  -ms-flex: 0 10 auto;
+  flex-shrink: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.navbar .left,
+.navbar .right {
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  flex-shrink: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.navbar .left a + a,
+.navbar .right a + a {
+  margin-left: 15px;
+}
+.navbar .left {
+  margin-right: 10px;
+}
+.navbar .right {
+  margin-left: 10px;
+}
+.navbar .right:first-child {
+  position: absolute;
+  right: 8px;
+  height: 100%;
+}
+
+i.icon.icon-back-blue {
+  width: 12px;
+  height: 20px;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23007aff'/></svg>");
+}
+
 /* === Messages === */
 .messages-content {
   background: #fff;
@@ -135,7 +313,7 @@ body {
 }
 .message-sent .message-text {
   padding-right: 22px;
-  background-color: #00d449;
+  background-color: #007AFF;
   color: white;
   margin-left: auto;
   -webkit-mask-box-image: url("data:image/svg+xml;charset=utf-8,<svg height='35' viewBox='0 0 96 70' width='48' xmlns='http://www.w3.org/2000/svg'><path d='m84 35c1 7-5 37-42 35-37 2-43-28-42-35-1-7 5-37 42-35 37-2 43 28 42 35z'/></svg>") 49.5% 55.75% 49.5% 43.25%;
@@ -193,95 +371,196 @@ body {
     <body>
 
 <div class="container">
-<div class="messages">
+  
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="left">
+        <a href="#" class="link">
+          <i class="icon icon-back-blue"></i>
+            <span>Back</span>
+          </a>
+        </div>
+        <div class="center">Kate</div>
+        <div class="right">
+          <a href="#" class="link">
+            <i class="icon icon-bars-blue"></i>
+            <span>Contact</span>
+          </a>
+        </div>
+     </div>
+  </div>
+
+  <div class="messages">
 
 
       <!-- Date stamp -->
       <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
       <!-- Sent message (by default - green and on right side) -->
-      <div class="message message-sent">
+      <div class="message message-sent message-last">
         <!-- Bubble with text -->
-        <div class="message-text">Hello</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">Our State like every other has rulers and subjects?</div>
       </div>
 
       <!-- Received message (by default - grey on left side) -->
-      <div class="message message-received">
+      <div class="message message-received message-last">
         <!-- Sender name -->
         <div class="message-name">Kate</div>
 
         <!-- Bubble with text -->
-        <div class="message-text">I am fine, thanks</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-
-
-      <!-- Date stamp -->
-      <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
-      <!-- Sent message (by default - green and on right side) -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">Hello</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-      <!-- Received message (by default - grey on left side) -->
-      <div class="message message-received">
-        <!-- Sender name -->
-        <div class="message-name">Kate</div>
-
-        <!-- Bubble with text -->
-        <div class="message-text">I am fine, thanks</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent message-first">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">True.</div>
       </div>
 
       <!-- Another sent message -->
       <div class="message message-sent message-last">
         <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">All of whom will call one another citizens?</div>
       </div>
 
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
 
-
-      <!-- Date stamp -->
-      <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
-      <!-- Sent message (by default - green and on right side) -->
-      <div class="message message-sent">
         <!-- Bubble with text -->
-        <div class="message-text">Hello</div>
+        <div class="message-text">Of course.</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">But is there not another name which people give to their rulers in other States?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">Generally they call them masters, but in democratic States they simply call them rulers.</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-first">
+        <!-- Bubble with text -->
+        <div class="message-text">And in our State</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">What other name besides that of citizens do the people give the rulers?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">They are called saviors and helpers.</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">And what do the rulers call the people?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">The maintainers and foster-fathers.</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">And what do they call them in other States?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">Slaves.</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">And what do the rulers call one another in other States?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">Fellow rulers.</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">And what in ours?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">Fellow guardians.</div>
       </div>
 
       <!-- Another sent message -->
       <div class="message message-sent">
         <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">Did you ever know an example in any other State of a ruler who would speak of one of his colleagues as his friend</div>
+      </div>
+
+      <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">And of another as not being his friend?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">Yes, very often.</div>
+      </div>
+
+       <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">And the friend he regards and describes as one in whom he has an interest, and the other as a stranger in whom he has no interest?</div>
+      </div>
+
+      <!-- Received message (by default - grey on left side) -->
+      <div class="message message-received message-last">
+        <!-- Sender name -->
+        <div class="message-name">Kate</div>
+
+        <!-- Bubble with text -->
+        <div class="message-text">Exactly.</div>
+      </div>
+
+       <!-- Another sent message -->
+      <div class="message message-sent message-last">
+        <!-- Bubble with text -->
+        <div class="message-text">But would any of your guardians think or speak of any other guardian as a stranger?</div>
       </div>
 
       <!-- Received message (by default - grey on left side) -->
@@ -290,139 +569,64 @@ body {
         <div class="message-name">Kate</div>
 
         <!-- Bubble with text -->
-        <div class="message-text">I am fine, thanks</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-
-      <!-- Date stamp -->
-      <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
-      <!-- Sent message (by default - green and on right side) -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">Hello</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">Certainly he would not</div>
       </div>
 
       <!-- Received message (by default - grey on left side) -->
-      <div class="message message-received">
+      <div class="message message-received message-last">
         <!-- Sender name -->
         <div class="message-name">Kate</div>
 
         <!-- Bubble with text -->
-        <div class="message-text">I am fine, thanks</div>
+        <div class="message-text">For everyone whom they meet will be regarded by them either as a brother or sister, or father or mother, or son or daughter, or as the child or parent of those who are thus connected with him.</div>
       </div>
 
       <!-- Another sent message -->
-      <div class="message message-sent">
+      <div class="message message-sent message-last">
         <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">Capital. But let me ask you once more</div>
       </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-
 
       <!-- Date stamp -->
-      <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
-      <!-- Sent message (by default - green and on right side) -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">Hello</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
+      <div class="messages-date">Sunday, Feb 9 <span>1:16</span></div>
 
       <!-- Received message (by default - grey on left side) -->
-      <div class="message message-received">
+      <div class="message message-received message-last">
         <!-- Sender name -->
         <div class="message-name">Kate</div>
 
         <!-- Bubble with text -->
-        <div class="message-text">I am fine, thanks</div>
+        <div class="message-text">...yeah?</div>
       </div>
 
       <!-- Another sent message -->
-      <div class="message message-sent">
+      <div class="message message-sent message-last">
         <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
+        <div class="message-text">Wait hold on my mom's calling...</div>
       </div>
 
       <!-- Date stamp -->
-      <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
-      <!-- Sent message (by default - green and on right side) -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">Hello</div>
-      </div>
-
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
+      <div class="messages-date">Sunday, Feb 9 <span>1:24</span></div>
 
       <!-- Received message (by default - grey on left side) -->
-      <div class="message message-received">
+      <div class="message message-received message-last">
         <!-- Sender name -->
         <div class="message-name">Kate</div>
 
         <!-- Bubble with text -->
-        <div class="message-text">I am fine, thanks</div>
+        <div class="message-text">Whatever I gotta get to zumba</div>
       </div>
 
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
+      <!-- Date stamp -->
+      <div class="messages-date">Sunday, Feb 9 <span>1:28</span></div>
 
-      <!-- Another sent message -->
-      <div class="message message-sent">
-        <!-- Bubble with text -->
-        <div class="message-text">How are you?</div>
-      </div>
     </div>
   </div>
 
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <!-- build:js scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
+        <script src="http://code.jquery.com/jquery-2.1.1.js"></script>
         <script src="scripts/app.js"></script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
