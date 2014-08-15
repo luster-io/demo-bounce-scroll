@@ -39,6 +39,8 @@ function List(listContainer, listItems) {
     })
   })
 
+  this.phys.position(-($(listContainer).height() - window.innerHeight))
+
   listItems = [].slice.call(listItems)
   listItems = listItems.map(function(el, i) {
     var offset = boundry.top + $(el).position().top
