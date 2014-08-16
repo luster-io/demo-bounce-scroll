@@ -6,7 +6,7 @@ var Physics = require('impulse')
   , height = window.innerHeight
 
 var boundry = new Physics.Boundry({
-  top: -($(listContainer).height() - window.innerHeight),
+  top: -($(listContainer).height() - window.innerHeight + 43),
   bottom: 0,
   left: 0,
   right: 0
@@ -17,6 +17,7 @@ var damping = 0.25
 function List(listContainer, listItems) {
   var that = this
   var currentPosition = 0
+  listItems = [].slice.call(listItems)
   this.phys = new Physics(function(x, y) {
     var lastPosition = currentPosition
       , delta
@@ -26,20 +27,32 @@ function List(listContainer, listItems) {
 
     listItems.forEach(function(item, i) {
       var dist = (boundry.top + that.startY) - item.offset
-        , scrollHardness = -Math.abs(dist / 600)
-        , position = item.spring.position().y + delta * scrollHardness
+        , scrollHardness = Math.abs(dist / 1500)
+        , position = item.spring.position().y
 
-      if(dist > 0 && delta < 0 && position > 0) {
-        position = 0
+      if(delta < 0) {
+        position -= Math.max(delta, delta * scrollHardness)
+      } else {
+        position -= Math.min(delta, delta * scrollHardness)
       }
-      if(dist < 0 && delta > 0 && position < 0) {
-        position = 0
-      }
+
       item.spring.position(0, position)
     })
-  })
 
-  this.phys.position(-($(listContainer).height() - window.innerHeight))
+    //poor mans collision detection!
+    listItems.forEach(function(item, i) {
+      var dist = (boundry.top + that.startY) - item.offset
+        , next = listItems[i + 1]
+        , prev = listItems[i - 1]
+        , position = item.spring.position().y
+      if(next && dist > 0 && delta < 0 && position > next.spring.position().y) {
+        item.spring.position(0, next.spring.position().y)
+      }
+      if(prev && dist < 0 && delta > 0 && position < prev.spring.position().y) {
+        item.spring.position(0, prev.spring.position().y)
+      }
+    })
+  })
 
   listItems = [].slice.call(listItems)
   listItems = listItems.map(function(el, i) {
@@ -48,10 +61,11 @@ function List(listContainer, listItems) {
       .style('translateY', function(x, y) { return currentPosition + y + 'px' })
       .visible(function(pos) {
         var position = pos.y + currentPosition
-        return (position + offset < boundry.top + height) && (position + offset + 50 > boundry.top)
+        return (position + offset < boundry.top + height) && (position + offset + 200 > boundry.top)
       })
 
-    var spring = phys.attachSpring(function() { return { x: 0, y: 0 } }, { tension: 200, damping: 30 })
+    var t = 400
+    var spring = phys.attachSpring(function() { return { x: 0, y: 0 } }, { tension: t, damping: t * .2 })
     spring.start()
 
     return {
@@ -59,13 +73,13 @@ function List(listContainer, listItems) {
       offset: offset
     }
   })
+  this.phys.position(0, boundry.top)
 
   listContainer.addEventListener('touchstart', function(evt) {
     that.startY = evt.touches[0].pageY - that.phys.position().y
     that.interaction = that.phys.interact()
     that.interaction.start()
   })
-
   listContainer.addEventListener('touchmove', function(evt) {
     evt.preventDefault()
     var delta
@@ -90,9 +104,9 @@ function List(listContainer, listItems) {
     if(end) {
       if(boundry.contains({ x: 0, y: position })) {
         that.phys.decelerate({ deceleration: 1000 }).to(end).start()
-          //.then(that.phys.spring({ tension: 200, damping: 30 }).start)
+          .then(that.phys.spring({ tension: 120, damping: 24 }).start)
       } else {
-        that.phys.spring({ tension: 200, damping: 30 }).to(end).start()
+        that.phys.spring({ tension: 150, damping: 24 }).to(end).start()
       }
     }
   })
