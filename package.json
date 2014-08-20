@@ -2,7 +2,7 @@
   "name": "spring-list",
   "version": "0.0.0",
   "dependencies": {
-    "impulse": "0.0.2",
+    "impulse": "git+ssh://git@github.com:luster-io/impulse.git#hand-optimize",
     "touch-velocity": "0.0.2"
   },
   "devDependencies": {
