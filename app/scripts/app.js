@@ -57,15 +57,11 @@ function List(listContainer, listItems) {
   listItems = [].slice.call(listItems)
   listItems = listItems.map(function(el, i) {
     var offset = boundry.top + $(el).position().top
-    var phys = new Physics(el)
+    var message = new Physics(el)
       .style('translateY', function(x, y) { return currentPosition + y + 'px' })
-      .visible(function(pos) {
-        var position = pos.y + currentPosition
-        return (position + offset < boundry.top + height) && (position + offset + 200 > boundry.top)
-      })
 
     var t = 400
-    var spring = phys.attachSpring(function() { return { x: 0, y: 0 } }, { tension: t, damping: t * .2 })
+    var spring = message.attachSpring(function() { return { x: 0, y: 0 } }, { tension: t, damping: t * .2 })
     spring.start()
 
     return {
@@ -75,27 +71,13 @@ function List(listContainer, listItems) {
   })
   this.phys.position(0, boundry.top)
 
-  listContainer.addEventListener('touchstart', function(evt) {
-    that.startY = evt.touches[0].pageY - that.phys.position().y
-    that.interaction = that.phys.interact()
-    that.interaction.start()
-  })
-  listContainer.addEventListener('touchmove', function(evt) {
-    evt.preventDefault()
-    var delta
-      , currentPosition = evt.touches[0].pageY - that.startY
+  var drag = this.phys.drag({ handle: listContainer, boundry: boundry, direction: 'vertical' })
 
-    if(currentPosition < boundry.top)
-      currentPosition = boundry.top - ((boundry.top - currentPosition) * damping)
-
-    if(currentPosition > boundry.bottom)
-      currentPosition = boundry.bottom - ((boundry.bottom - currentPosition) * damping)
-
-    that.interaction.position(0, currentPosition)
+  drag.on('start', function(evt) {
+    that.startY = (evt.touches && evt.touches[0].pageY || evt.pageY) - that.phys.position().y
   })
 
-  listContainer.addEventListener('touchend', function(evt) {
-    that.interaction.end()
+  drag.on('end', function(evt) {
     var position = that.phys.position().y
 
     if(that.phys.direction('up') || position < boundry.top) end = { x: 0, y: boundry.top }
