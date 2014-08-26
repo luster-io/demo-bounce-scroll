@@ -1,22 +1,19 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-/** @jsx React.DOM */
-
 var Physics = require('impulse')
-  , listContainer = document.querySelector('.messages')
-  , listItems = document.querySelectorAll('.messages > div')
-  , height = window.innerHeight
-
-var boundry = new Physics.Boundry({
-  top: -($(listContainer).height() - window.innerHeight + 43),
-  bottom: 0,
-  left: 0,
-  right: 0
-})
 
 var damping = 0.25
 
 function List(listContainer, listItems) {
+
+  var boundry = new Physics.Boundry({
+    top: -($(listContainer).height() - window.innerHeight + 43),
+    bottom: 0,
+    left: 0,
+    right: 0
+  })
+
+  var height = window.innerHeight
   var that = this
   var currentPosition = 0
   listItems = [].slice.call(listItems)
@@ -96,8 +93,13 @@ function List(listContainer, listItems) {
   })
 }
 
-var list = new List(listContainer, listItems)
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_96fdddf4.js","/")
+$(function() {
+  var listContainer = document.querySelector('.messages')
+    , listItems = document.querySelectorAll('.messages > div')
+    , list = new List(listContainer, listItems)
+})
+
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_e59077a8.js","/")
 },{"buffer":3,"impulse":14,"oMfpAn":6}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 

@@ -1,20 +1,17 @@
-/** @jsx React.DOM */
-
 var Physics = require('impulse')
-  , listContainer = document.querySelector('.messages')
-  , listItems = document.querySelectorAll('.messages > div')
-  , height = window.innerHeight
-
-var boundry = new Physics.Boundry({
-  top: -($(listContainer).height() - window.innerHeight + 43),
-  bottom: 0,
-  left: 0,
-  right: 0
-})
 
 var damping = 0.25
 
 function List(listContainer, listItems) {
+
+  var boundry = new Physics.Boundry({
+    top: -($(listContainer).height() - window.innerHeight + 43),
+    bottom: 0,
+    left: 0,
+    right: 0
+  })
+
+  var height = window.innerHeight
   var that = this
   var currentPosition = 0
   listItems = [].slice.call(listItems)
@@ -94,4 +91,8 @@ function List(listContainer, listItems) {
   })
 }
 
-var list = new List(listContainer, listItems)
+$(function() {
+  var listContainer = document.querySelector('.messages')
+    , listItems = document.querySelectorAll('.messages > div')
+    , list = new List(listContainer, listItems)
+})
