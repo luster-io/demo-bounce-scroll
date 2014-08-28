@@ -5,10 +5,10 @@ var gulp = require('gulp');
 // Load plugins
 var $ = require('gulp-load-plugins')();
 
-
-
-
-
+gulp.task('styles', function () {
+    return gulp.src('app/styles/*.css')
+        .pipe(gulp.dest('dist/styles'))
+}); 
 
 // Scripts
 gulp.task('scripts', function () {
@@ -114,7 +114,7 @@ gulp.task('watch', ['html', 'bundle', 'connect'], function () {
     gulp.watch('app/*.html', ['html']);
 
 
-
+    gulp.watch('app/styles/*.css', ['styles']);
 
     // Watch .jsx files
     // gulp.watch('app/scripts/**/*.jsx', ['jsx', 'scripts']);
