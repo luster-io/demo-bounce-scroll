@@ -8,7 +8,7 @@ var $ = require('gulp-load-plugins')();
 gulp.task('styles', function () {
     return gulp.src('app/styles/*.css')
         .pipe(gulp.dest('dist/styles'))
-}); 
+});
 
 // Scripts
 gulp.task('scripts', function () {
@@ -105,7 +105,7 @@ gulp.task('json', function() {
 
 
 // Watch
-gulp.task('watch', ['html', 'bundle', 'connect'], function () {
+gulp.task('watch', ['html', 'styles', 'bundle', 'connect'], function () {
 
     // Watch .json files
     gulp.watch('app/scripts/**/*.json', ['json']);
